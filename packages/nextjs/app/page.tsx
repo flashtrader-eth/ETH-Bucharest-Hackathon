@@ -1,71 +1,496 @@
 "use client";
 
-import Link from "next/link";
+import React from "react";
 import type { NextPage } from "next";
-import { useAccount } from "wagmi";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { Address } from "~~/components/scaffold-eth";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+
+const styles = `
+  /* Your CSS styles here */
+  .flex {
+    display: flex;
+  }
+
+  .flex-grow {
+    flex-grow: 1;
+  }
+
+  .flex-col {
+    flex-direction: column;
+  }
+
+  .flex-row {
+    flex-direction: row;
+  }
+
+  .justify-center {
+    justify-content: center;
+  }
+
+  .items-center {
+    align-items: center;
+  }
+
+  .gap-12 {
+    gap: 12px;
+  }
+
+  .px-8 {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .py-12 {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .max-w-xs {
+    max-width: 20rem; /* Adjust as needed */
+  }
+
+  .rounded-3xl {
+    border-radius: 1.5rem; /* Adjust as needed */
+  }
+
+  .bg-base-100 {
+    background-color: #dddddd; /* Adjust as needed */
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .h-8 {
+    height: 2rem; /* Adjust as needed */
+  }
+
+  .w-8 {
+    width: 2rem; /* Adjust as needed */
+  }
+
+  .fill-secondary {
+    fill: #888; /* Adjust as needed */
+  }
+
+  .link {
+    color: blue; /* Adjust as needed */
+    text-decoration: underline;
+  }
+
+  .break-all {
+    word-wrap: break-word;
+  }
+
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .card {
+    flex: 0 0 calc(33.33% - 16px);
+    margin: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .card {
+      flex: 0 0 calc(50% - 16px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .card {
+      flex: 0 0 calc(100% - 16px);
+    }
+  }
+`;
+
+interface CardWithExchangeAndAddress {
+  icon: React.ReactNode;
+  exchange: string;
+  address: string;
+}
+
+interface CardWithExchangeAndCoinAndValue {
+  icon: React.ReactNode;
+  exchange: string;
+  coin: string;
+  value: number;
+}
 
 const Home: NextPage = () => {
-  const { address: connectedAddress } = useAccount();
-
   return (
-    <>
-      <div className="flex items-center flex-col flex-grow pt-10">
-        <div className="px-5">
-          <h1 className="text-center">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
-          </h1>
-          <div className="flex justify-center items-center space-x-2">
-            <p className="my-2 font-medium">Connected Address:</p>
-            <Address address={connectedAddress} />
-          </div>
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/app/page.tsx
-            </code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code>
-          </p>
-        </div>
-
-        <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contracts
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-          </div>
+    <div className="flex items-center flex-col flex-grow pt-10 justify-center">
+      {" "}
+      {/* Added justify-center class */}
+      <style>{styles}</style>
+      <div className="overflow-x-auto shadow-lg">
+        <table className="table table-zebra w-full">
+          <thead>
+            <tr>
+              <th className="bg-primary">Address</th>
+              <th className="bg-primary">Amount of ETH in</th>
+              <th className="bg-primary">Amount of Balloons out</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div className="px-5"></div>
+      <div className="flex-grow w-full mt-16 px-8 py-12">
+        <div className="cards">
+          {/* Cards with exchange and coin */}
+          <CardWithEA
+            icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
+            exchange="UniSwap"
+            address="0x473548591500E2b474828aAfB159Df49b4a4632F"
+          />
+          <CardWithEA
+            icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
+            exchange="SushiSwap"
+            address="0x473548591500E2b474828aAfB159Df49b4a4632F"
+          />
+          <CardWithECV
+            icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
+            exchange="UniSwap"
+            coin="Shiba"
+            value={100}
+          />
+          <CardWithECV
+            icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
+            exchange="SushiSwap"
+            coin="WETH"
+            value={100}
+          />
+          <CardWithECV
+            icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
+            exchange="UniSwap"
+            coin="Shiba"
+            value={100}
+          />
+          <CardWithECV
+            icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
+            exchange="SushiSwap"
+            coin="WETH"
+            value={100}
+          />
         </div>
       </div>
-    </>
+    </div>
+  );
+};
+
+const CardWithEA: React.FC<CardWithExchangeAndAddress> = ({ icon, exchange, address }) => {
+  return (
+    <div className="card bg-base-100 px-5 py-8 text-center items-center max-w-xs rounded-xl">
+      {icon}
+      <p className="mt-4">
+        {exchange} :
+        <br />
+        <span className="break-all">{address}</span>
+      </p>
+    </div>
+  );
+};
+
+const CardWithECV: React.FC<CardWithExchangeAndCoinAndValue> = ({ icon, exchange, coin, value }) => {
+  return (
+    <div className="card bg-base-100 px-5 py-8 text-center items-center max-w-xs rounded-xl">
+      {icon}
+      <p className="mt-4">
+        {exchange} : {coin} : {value}
+      </p>
+    </div>
   );
 };
 
 export default Home;
+
+//GOOD CODE
+
+// "use client";
+
+// // import Link from "next/link";
+// import type { NextPage } from "next";
+// import { useAccount } from "wagmi";
+// import { MagnifyingGlassIcon, ArchiveBoxXMarkIcon } from "@heroicons/react/24/outline";
+// // import { Address } from "~~/components/scaffold-eth";
+// // import { formatEther } from "viem";
+// // import { useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
+// import React, { useEffect } from "react";
+// import axios from 'axios';
+// import { ethers } from 'ethers';
+
+// const styles = `
+//   /* Your CSS styles here */
+//   .flex {
+//     display: flex;
+//   }
+
+//   .flex-grow {
+//     flex-grow: 1;
+//   }
+
+//   .flex-col {
+//     flex-direction: column;
+//   }
+
+//   .flex-row {
+//     flex-direction: row;
+//   }
+
+//   .justify-center {
+//     justify-content: center;
+//   }
+
+//   .items-center {
+//     align-items: center;
+//   }
+
+//   .gap-12 {
+//     gap: 12px;
+//   }
+
+//   .px-8 {
+//     padding-left: 8px;
+//     padding-right: 8px;
+//   }
+
+//   .py-12 {
+//     padding-top: 12px;
+//     padding-bottom: 12px;
+//   }
+
+//   .max-w-xs {
+//     max-width: 20rem; /* Adjust as needed */
+//   }
+
+//   .rounded-3xl {
+//     border-radius: 1.5rem; /* Adjust as needed */
+//   }
+
+//   .bg-base-100 {
+//     background-color: #dddddd; /* Adjust as needed */
+//   }
+
+//   .text-center {
+//     text-align: center;
+//   }
+
+//   .h-8 {
+//     height: 2rem; /* Adjust as needed */
+//   }
+
+//   .w-8 {
+//     width: 2rem; /* Adjust as needed */
+//   }
+
+//   .fill-secondary {
+//     fill: #888; /* Adjust as needed */
+//   }
+
+//   .link {
+//     color: blue; /* Adjust as needed */
+//     text-decoration: underline;
+//   }
+
+//   .break-all {
+//     word-wrap: break-word;
+//   }
+
+//   .cards {
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: center;
+//   }
+
+//   .card {
+//     flex: 0 0 calc(33.33% - 16px);
+//     margin: 8px;
+//   }
+
+//   @media (max-width: 768px) {
+//     .card {
+//       flex: 0 0 calc(50% - 16px);
+//     }
+//   }
+
+//   @media (max-width: 480px) {
+//     .card {
+//       flex: 0 0 calc(100% - 16px);
+//     }
+//   }
+// `;
+
+// interface CardWithExchangeAndAddress {
+//   icon: React.ReactNode;
+//   exchange: string;
+//   address: string;
+// }
+
+// interface CardWithExchangeAndCoinAndValue {
+//   icon: React.ReactNode;
+//   exchange: string;
+//   coin: string;
+//   value: number;
+// }
+
+// const Home: NextPage = () => {
+//   const { address: connectedAddress } = useAccount();
+//   // const [transactions, setTransactions] = React.useState([]);
+
+//   useEffect(() => {
+//     if (connectedAddress) {
+//       fetchTransactions();
+//     }
+//   }, [connectedAddress]);
+
+//   const fetchTransactions = async () => {
+//     try {
+
+//       const validAddress = ethers.utils.isAddress(connectedAddress as string) ? connectedAddress : '';
+//       if (!validAddress) {
+//         console.error('Error: Invalid Ethereum address format');
+//         return [];
+//       }
+
+//       // const response = await axios.get(`https://api.etherscan.io/api?module=account&action=txlist&address=${connectedAddress}&startblock=0&endblock=99999999&sort=asc&apikey=${apiKey}`);
+//       const response = await axios.get(`http://localhost:3000/blockexplorer/address/${validAddress}`)
+//       const result = response.data.result;
+//       console.log(result)
+//       if (Array.isArray(result)) {
+//         return result;
+//       } else {
+//         console.error('Received data is not an array:', result);
+//         return [];
+//       }
+//     } catch (error) {
+//       console.error('Error fetching transactions:', error);
+//       return [];
+//     }
+//   };
+
+//   React.useEffect(() => {
+//     const fetchData = async () => {
+//       // const result = await fetchTransactions();
+//       // setTransactions(result);
+//     };
+//     fetchData();
+//   }, []);
+
+//   return (
+//     <div className="flex items-center flex-col flex-grow pt-10 justify-center">
+//       <style>{styles}</style>
+//       <div className="overflow-x-auto shadow-lg">
+//         <table className="table table-zebra w-full">
+//           <thead>
+//             <tr>
+//               <th className="bg-primary">From</th>
+//               <th className="bg-primary">To</th>
+//               <th className="bg-primary">Value</th>
+//               <th className="bg-primary">Timestamp</th>
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {transactions.length > 0 ? (
+//               transactions.map((transaction, index) => (
+//                 <tr key={index}>
+//                   <td className="text-center">
+//                     {/* {transaction.from} */}
+//                   </td>
+//                   <td className="text-center">
+//                     {/* {transaction.to} */}
+//                   </td>
+//                   <td className="text-center">
+//                     {/* {transaction.value} */}
+//                   </td>
+//                   <td className="text-center">
+//                     {/* {transaction.timeStamp} */}
+//                   </td>
+//                 </tr>
+//               ))
+//             ) : (
+//               <tr>
+//                 <td colSpan={4} className="text-center">No transactions found.</td>
+//               </tr>
+//             )}
+//           </tbody>
+//         </table>
+//       </div>
+//       <div className="px-5"></div>
+//       <div className="flex-grow w-full mt-16 px-8 py-12">
+//         <div className="cards">
+//           {/* Cards with exchange and coin */}
+//           <CardWithEA
+//             icon={<ArchiveBoxXMarkIcon className="h-12 w-12 fill-secondary" />}
+//             exchange="UniSwap"
+//             address="0x473548591500E2b474828aAfB159Df49b4a4632F"
+//           />
+//           <CardWithEA
+//             icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
+//             exchange="SushiSwap"
+//             address="0x473548591500E2b474828aAfB159Df49b4a4632F"
+//           />
+//           <CardWithECV
+//             icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
+//             exchange="UniSwap"
+//             coin="Shiba"
+//             value={100}
+//           />
+//           <CardWithECV
+//             icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
+//             exchange="SushiSwap"
+//             coin="WETH"
+//             value={100}
+//           />
+//           <CardWithECV
+//             icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
+//             exchange="UniSwap"
+//             coin="Shiba"
+//             value={100}
+//           />
+//           <CardWithECV
+//             icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
+//             exchange="SushiSwap"
+//             coin="WETH"
+//             value={100}
+//           />
+//         </div>
+//       </div>
+
+//       <div className="flex justify-center mt-8">
+//         {/* <button className="px-4 py-2 mx-2 bg-blue-500 text-white rounded-md" onClick={runBotScript}>
+//           Run bot.js
+//         </button>
+//         <button className="px-4 py-2 mx-2 bg-blue-500 text-white rounded-md" onClick={runManipulateScript}>
+//           Run manipulate.js
+//         </button> */}
+//       </div>
+//     </div>
+//   );
+// };
+
+// const CardWithEA: React.FC<CardWithExchangeAndAddress> = ({ icon, exchange, address }) => {
+//   return (
+//     <div className="card bg-base-100 px-5 py-8 text-center items-center max-w-xs rounded-xl">
+//       {icon}
+//       <p className="mt-4">
+//         {exchange} :
+//         <br />
+//         <span className="break-all">{address}</span>
+//       </p>
+//     </div>
+//   );
+// };
+
+// const CardWithECV: React.FC<CardWithExchangeAndCoinAndValue> = ({ icon, exchange, coin, value }) => {
+//   return (
+//     <div className="card bg-base-100 px-5 py-8 text-center items-center max-w-xs rounded-xl">
+//       {icon}
+//       <p className="mt-4">
+//         {exchange} : {coin} : {value}
+//       </p>
+//     </div>
+//   );
+// };
+
+// export default Home;
