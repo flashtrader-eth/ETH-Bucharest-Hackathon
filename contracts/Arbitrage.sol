@@ -13,6 +13,26 @@ contract Arbitrage is IFlashLoanRecipient {
     IUniswapV2Router02 public immutable uRouter;
     address public owner;
 
+    event TradeExecuted(
+        address sender,
+        address token,
+        uint256 amount,
+        bytes data
+    );
+    event LoanedReturned(address sender, address token, uint256 amount);
+    event SwappedOnUniswap(
+        uint256 amountIn,
+        uint256 amountOut,
+        address path0,
+        address path1
+    );
+    event SwappedOnSushiswap(
+        uint256 amountIn,
+        uint256 amountOut,
+        address path0,
+        address path1
+    );
+
     constructor(address _sRouter, address _uRouter) {
         sRouter = IUniswapV2Router02(_sRouter); // Sushiswap
         uRouter = IUniswapV2Router02(_uRouter); // Uniswap
@@ -36,6 +56,8 @@ contract Arbitrage is IFlashLoanRecipient {
         amounts[0] = _flashAmount;
 
         vault.flashLoan(this, tokens, amounts, data);
+
+        emit TradeExecuted(msg.sender, _token0, _flashAmount, data);
     }
 
     function receiveFlashLoan(
@@ -86,6 +108,8 @@ contract Arbitrage is IFlashLoanRecipient {
         IERC20(token0).transfer(address(vault), flashAmount);
 
         IERC20(token0).transfer(owner, IERC20(token0).balanceOf(address(this)));
+
+        emit LoanedReturned(msg.sender, token0, flashAmount);
     }
 
     // -- INTERNAL FUNCTIONS -- //
@@ -107,6 +131,8 @@ contract Arbitrage is IFlashLoanRecipient {
             address(this),
             (block.timestamp + 1200)
         );
+
+        emit SwappedOnUniswap(_amountIn, _amountOut, _path[0], _path[1]);
     }
 
     function _swapOnSushiswap(
@@ -126,5 +152,7 @@ contract Arbitrage is IFlashLoanRecipient {
             address(this),
             (block.timestamp + 1200)
         );
+
+        emit SwappedOnSushiswap(_amountIn, _amountOut, _path[0], _path[1]);
     }
 }

@@ -479,6 +479,485 @@
       "artifacts": [
         "IUniswapV2Router01"
       ]
+    },
+    "/Users/mihaimunteanu/Downloads/Blockchain/ETH Bucharest/ETH-Bucharest-Hackathon/contracts/Arbitrage.sol": {
+      "lastModificationDate": 1711641033375,
+      "contentHash": "f4fe4307aeb91b19bed09706403e2aa4",
+      "sourceName": "contracts/Arbitrage.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@balancer-labs/v2-interfaces/contracts/vault/IVault.sol",
+        "@balancer-labs/v2-interfaces/contracts/vault/IFlashLoanRecipient.sol",
+        "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol"
+      ],
+      "versionPragmas": [
+        "0.8.18"
+      ],
+      "artifacts": [
+        "Arbitrage"
+      ]
+    },
+    "/Users/mihaimunteanu/Downloads/Blockchain/ETH Bucharest/ETH-Bucharest-Hackathon/node_modules/@balancer-labs/v2-interfaces/contracts/vault/IVault.sol": {
+      "lastModificationDate": 1711638377393,
+      "contentHash": "46a20a7701464ab9c62cb907614fd3bb",
+      "sourceName": "@balancer-labs/v2-interfaces/contracts/vault/IVault.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../solidity-utils/openzeppelin/IERC20.sol",
+        "../solidity-utils/helpers/IAuthentication.sol",
+        "../solidity-utils/helpers/ISignaturesValidator.sol",
+        "../solidity-utils/helpers/ITemporarilyPausable.sol",
+        "../solidity-utils/misc/IWETH.sol",
+        "./IAsset.sol",
+        "./IAuthorizer.sol",
+        "./IFlashLoanRecipient.sol",
+        "./IProtocolFeesCollector.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "IVault"
+      ]
+    },
+    "/Users/mihaimunteanu/Downloads/Blockchain/ETH Bucharest/ETH-Bucharest-Hackathon/node_modules/@balancer-labs/v2-interfaces/contracts/vault/IFlashLoanRecipient.sol": {
+      "lastModificationDate": 1711638377383,
+      "contentHash": "31e2c769fc0ac25db2d9b46225793f01",
+      "sourceName": "@balancer-labs/v2-interfaces/contracts/vault/IFlashLoanRecipient.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../solidity-utils/openzeppelin/IERC20.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "IFlashLoanRecipient"
+      ]
+    },
+    "/Users/mihaimunteanu/Downloads/Blockchain/ETH Bucharest/ETH-Bucharest-Hackathon/node_modules/@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol": {
+      "lastModificationDate": 1711638377632,
+      "contentHash": "3fd36426274a5b35f7e702f87ba08a8e",
+      "sourceName": "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IUniswapV2Router01.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.2"
+      ],
+      "artifacts": [
+        "IUniswapV2Router02"
+      ]
+    },
+    "/Users/mihaimunteanu/Downloads/Blockchain/ETH Bucharest/ETH-Bucharest-Hackathon/node_modules/@balancer-labs/v2-interfaces/contracts/solidity-utils/openzeppelin/IERC20.sol": {
+      "lastModificationDate": 1711638377313,
+      "contentHash": "028dddcf9b178b241401b1ae8126c903",
+      "sourceName": "@balancer-labs/v2-interfaces/contracts/solidity-utils/openzeppelin/IERC20.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "IERC20"
+      ]
+    },
+    "/Users/mihaimunteanu/Downloads/Blockchain/ETH Bucharest/ETH-Bucharest-Hackathon/node_modules/@balancer-labs/v2-interfaces/contracts/solidity-utils/helpers/ISignaturesValidator.sol": {
+      "lastModificationDate": 1711638377239,
+      "contentHash": "48de5f36515898c9e9ddcd00f651ef86",
+      "sourceName": "@balancer-labs/v2-interfaces/contracts/solidity-utils/helpers/ISignaturesValidator.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "ISignaturesValidator"
+      ]
+    },
+    "/Users/mihaimunteanu/Downloads/Blockchain/ETH Bucharest/ETH-Bucharest-Hackathon/node_modules/@balancer-labs/v2-interfaces/contracts/solidity-utils/helpers/IAuthentication.sol": {
+      "lastModificationDate": 1711638377235,
+      "contentHash": "63f8c7b7a4ac329c8104063a025a991b",
+      "sourceName": "@balancer-labs/v2-interfaces/contracts/solidity-utils/helpers/IAuthentication.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "IAuthentication"
+      ]
+    },
+    "/Users/mihaimunteanu/Downloads/Blockchain/ETH Bucharest/ETH-Bucharest-Hackathon/node_modules/@balancer-labs/v2-interfaces/contracts/solidity-utils/helpers/ITemporarilyPausable.sol": {
+      "lastModificationDate": 1711638377241,
+      "contentHash": "5a94e6420fe95c3e0fa16e78fb8f74c3",
+      "sourceName": "@balancer-labs/v2-interfaces/contracts/solidity-utils/helpers/ITemporarilyPausable.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "ITemporarilyPausable"
+      ]
+    },
+    "/Users/mihaimunteanu/Downloads/Blockchain/ETH Bucharest/ETH-Bucharest-Hackathon/node_modules/@balancer-labs/v2-interfaces/contracts/solidity-utils/misc/IWETH.sol": {
+      "lastModificationDate": 1711638377255,
+      "contentHash": "8347e7eef0bb47de8851ecbcf8eb590c",
+      "sourceName": "@balancer-labs/v2-interfaces/contracts/solidity-utils/misc/IWETH.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../openzeppelin/IERC20.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "IWETH"
+      ]
+    },
+    "/Users/mihaimunteanu/Downloads/Blockchain/ETH Bucharest/ETH-Bucharest-Hackathon/node_modules/@balancer-labs/v2-interfaces/contracts/vault/IAsset.sol": {
+      "lastModificationDate": 1711638377377,
+      "contentHash": "20c61578e7416055512409a25576fb1a",
+      "sourceName": "@balancer-labs/v2-interfaces/contracts/vault/IAsset.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "IAsset"
+      ]
+    },
+    "/Users/mihaimunteanu/Downloads/Blockchain/ETH Bucharest/ETH-Bucharest-Hackathon/node_modules/@balancer-labs/v2-interfaces/contracts/vault/IAuthorizer.sol": {
+      "lastModificationDate": 1711638377378,
+      "contentHash": "03599610995051c98edd4f72102136b2",
+      "sourceName": "@balancer-labs/v2-interfaces/contracts/vault/IAuthorizer.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "IAuthorizer"
+      ]
+    },
+    "/Users/mihaimunteanu/Downloads/Blockchain/ETH Bucharest/ETH-Bucharest-Hackathon/node_modules/@balancer-labs/v2-interfaces/contracts/vault/IProtocolFeesCollector.sol": {
+      "lastModificationDate": 1711638377389,
+      "contentHash": "26a23f2667431cfc1ea8aa5e69edef63",
+      "sourceName": "@balancer-labs/v2-interfaces/contracts/vault/IProtocolFeesCollector.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../solidity-utils/openzeppelin/IERC20.sol",
+        "./IVault.sol",
+        "./IAuthorizer.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "IProtocolFeesCollector"
+      ]
+    },
+    "/Users/mihaimunteanu/Downloads/Blockchain/ETH Bucharest/ETH-Bucharest-Hackathon/node_modules/@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router01.sol": {
+      "lastModificationDate": 1711638377631,
+      "contentHash": "95d8729b2c698dc663322167b3c085fe",
+      "sourceName": "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router01.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.2"
+      ],
+      "artifacts": [
+        "IUniswapV2Router01"
+      ]
     }
   }
 }

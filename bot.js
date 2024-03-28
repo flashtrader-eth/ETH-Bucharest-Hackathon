@@ -146,10 +146,7 @@ const determineDirection = async (_priceDifference) => {
 
 const determineProfitability = async (_routerPath, _token0Contract, _token0, _token1) => {
   console.log(`Determining Profitability...\n`)
-
-  // This is where you can customize your conditions on whether a profitable trade is possible...
-
-  let exchangeToBuy, exchangeToSell
+  let exchangeToBuy, exchangeToSell;
 
   if (await _routerPath[0].getAddress() === await uRouter.getAddress()) {
     exchangeToBuy = "Uniswap"
@@ -159,31 +156,18 @@ const determineProfitability = async (_routerPath, _token0Contract, _token0, _to
     exchangeToSell = "Uniswap"
   }
 
-  /**
-   * The helper file has quite a few functions that come in handy
-   * for performing specifc tasks. Below we call the getReserves()
-   * function in the helper to get the reserves of a pair.
-   */
-
   const uReserves = await getReserves(uPair)
   const sReserves = await getReserves(sPair)
 
   let minAmount
 
   if (uReserves[0] > sReserves[0]) {
-    minAmount = BigInt(sReserves[0]) / BigInt(2)
+    minAmount = BigInt(sReserves[0]) / BigInt(20)
   } else {
-    minAmount = BigInt(uReserves[0]) / BigInt(2)
+    minAmount = BigInt(uReserves[0]) / BigInt(20)
   }
 
   try {
-
-    /**
-     * See getAmountsIn & getAmountsOut:
-     * - https://docs.uniswap.org/contracts/v2/reference/smart-contracts/library#getamountsin
-     * - https://docs.uniswap.org/contracts/v2/reference/smart-contracts/library#getamountsout
-     */
-
     // This returns the amount of WETH needed to swap for X amount of SHIB
     const estimate = await _routerPath[0].getAmountsIn(minAmount, [_token0.address, _token1.address])
 
@@ -256,7 +240,7 @@ const executeTrade = async (_routerPath, _token0Contract, _token1Contract) => {
   const ethBalanceBefore = await provider.getBalance(account.address)
 
   if (config.PROJECT_SETTINGS.isDeployed) {
-    console.log(`Amount to be loaned: ${amount}\n`)
+    console.log(`Executing trade for amount: ${ethers.formatUnits(amount.toString(), 'ether')} WETH ...\n`)
     const transaction = await arbitrage.connect(account).executeTrade(
       startOnUniswap,
       await _token0Contract.getAddress(),
@@ -265,7 +249,7 @@ const executeTrade = async (_routerPath, _token0Contract, _token1Contract) => {
       { gasLimit: process.env.GAS_LIMIT }
     )
 
-    const receipt = await transaction.wait()
+    await transaction.wait()
   }
 
   console.log(`Trade Complete:\n`)
