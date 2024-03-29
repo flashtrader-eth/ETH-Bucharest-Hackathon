@@ -1,6 +1,6 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { Contract } from "ethers";
+import { FlashLoan } from "../typechain-types";
 
 import config from "../config.json";
 
@@ -35,8 +35,9 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   });
 
   // Get the deployed contract to interact with it after deploying.
-  const flashLoan = await hre.ethers.getContract<Contract>("FlashLoan", deployer);
-  console.log(`FlashLoan Contract deployed at: ${flashLoan.target}`);
+  const flashLoan: FlashLoan = await hre.ethers.getContract("FlashLoan", deployer);
+  const flashLoanAddress = await flashLoan.getAddress();
+  console.log(`FlashLoan Contract deployed at: ${flashLoanAddress}`);
 };
 
 export default deployYourContract;
