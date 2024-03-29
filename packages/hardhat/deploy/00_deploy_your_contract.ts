@@ -36,7 +36,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   // Get the deployed contract to interact with it after deploying.
   const flashLoan = await hre.ethers.getContract<Contract>("FlashLoan", deployer);
-  console.log("👋 Initial greeting:", await flashLoan.greeting());
+  console.log(`FlashLoan Contract deployed at: ${flashLoan.target}`);
 };
 
 export default deployYourContract;

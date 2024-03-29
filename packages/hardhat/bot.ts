@@ -4,7 +4,6 @@ import { ethers, Contract } from "ethers";
 import path from "path";
 import http from "http";
 import cors from "cors";
-import Big from "big.js";
 
 // Importing types and interfaces for better typing support
 import config from "./config.json";
@@ -12,6 +11,7 @@ import { getTokenAndContract, getPairContract, getReserves, calculatePrice, simu
 import { provider, uFactory, uRouter, sFactory, sRouter, arbitrage } from "./helpers/initialization";
 
 import { config as dotenvConfig } from "dotenv";
+import { ERC20 } from "./types/ethers-contracts/ERC20";
 dotenvConfig({ path: "../../.env" });
 
 // Define your environment variables here. Adjust types as necessary.
@@ -163,7 +163,7 @@ const determineDirection = async (_priceDifference: string): Promise<Contract[] 
 
 const determineProfitability = async (
   _routerPath: Contract[],
-  _token0Contract: Contract,
+  _token0Contract: ERC20,
   _token0: Token,
   _token1: Token,
 ): Promise<boolean> => {
@@ -178,15 +178,15 @@ const determineProfitability = async (
     exchangeToSell = "Uniswap";
   }
 
-  const uReserves = await getReserves(uPair);
-  const sReserves = await getReserves(sPair);
+  const uReserves: bigint[] = await getReserves(uPair);
+  const sReserves: bigint[] = await getReserves(sPair);
 
   let minAmount: bigint;
 
   if (uReserves[0] > sReserves[0]) {
-    minAmount = BigInt(Big(sReserves[0]).div(20).round(0, 0).toString());
+    minAmount = sReserves[0] / BigInt(20);
   } else {
-    minAmount = BigInt(Big(uReserves[0]).div(20).round(0, 0).toString());
+    minAmount = uReserves[0] / BigInt(20);
   }
 
   try {
@@ -210,7 +210,7 @@ const determineProfitability = async (
     );
 
     const { amountIn, amountOut } = await simulate(estimate[0], _routerPath, _token0, _token1);
-    const amountDifference = Number(amountOut) - Number(amountIn);
+    const amountDifference: number = Number(amountOut) - Number(amountIn);
     const estimatedGasCost = gasLimit * gasPrice;
 
     // Fetch account
@@ -220,7 +220,7 @@ const determineProfitability = async (
     const wethBalanceBeforeWei: bigint = await _token0Contract.balanceOf(account.address);
 
     // Calculating WETH balance after. Note: Both variables should be BigNumber
-    const wethBalanceAfterWei: bigint = wethBalanceBeforeWei + BigInt(amountDifference);
+    const wethBalanceAfterWei: bigint = wethBalanceBeforeWei + ethers.parseUnits(amountDifference.toString(), "ether");
 
     // Calculating the difference in WETH balance in Wei
     const wethBalanceDifferenceWei: bigint = wethBalanceAfterWei - wethBalanceBeforeWei;
@@ -250,7 +250,6 @@ const determineProfitability = async (
     };
 
     console.table(data);
-    console.log();
 
     if (Number(amountOut) < Number(amountIn)) {
       return false;
@@ -266,11 +265,7 @@ const determineProfitability = async (
   }
 };
 
-const executeTrade = async (
-  _routerPath: Contract[],
-  _token0Contract: Contract,
-  _token1Contract: Contract,
-): Promise<void> => {
+const executeTrade = async (_routerPath: Contract[], _token0Contract: ERC20, _token1Contract: ERC20): Promise<void> => {
   console.log(`Attempting Arbitrage...\n`);
 
   let startOnUniswap;
@@ -318,7 +313,7 @@ const executeTrade = async (
     "WETH Gained/Lost": ethers.formatUnits(tokenBalanceDifference.toString(), "ether"),
     "--": {},
     "Total Gained/Lost": `${ethers.formatUnits(
-      (tokenBalanceDifference - Number(ethBalanceDifference)).toString(),
+      (tokenBalanceDifference - ethBalanceDifference).toString(),
       "ether",
     )} ETH`,
   };

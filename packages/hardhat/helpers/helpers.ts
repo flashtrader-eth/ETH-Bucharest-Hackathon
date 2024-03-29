@@ -1,7 +1,8 @@
 import { Contract, Provider, formatUnits } from "ethers";
 import Big from "big.js";
 import IUniswapV2Pair from "@uniswap/v2-core/build/IUniswapV2Pair.json";
-import IERC20 from "@openzeppelin/contracts/build/contracts/ERC20.json";
+import { ERC20__factory } from "../types/ethers-contracts/factories/ERC20__factory";
+import { ERC20 } from "../types/ethers-contracts/ERC20";
 
 interface Token {
   address: string;
@@ -11,8 +12,8 @@ interface Token {
 }
 
 interface TokenContracts {
-  token0Contract: Contract;
-  token1Contract: Contract;
+  token0Contract: ERC20;
+  token1Contract: ERC20;
   token0: Token;
   token1: Token;
 }
@@ -22,14 +23,12 @@ async function getTokenAndContract(
   _token1Address: string,
   _provider: Provider,
 ): Promise<TokenContracts> {
-  const token0Contract = new Contract(_token0Address, IERC20.abi, _provider);
-  const token1Contract = new Contract(_token1Address, IERC20.abi, _provider);
+  const token0Contract = ERC20__factory.connect(_token0Address, _provider);
+  const token1Contract = ERC20__factory.connect(_token1Address, _provider);
 
-  console.log(`Provider: ${await _provider.getBlockNumber()}`);
-  console.log(`token0Address: ${_token0Address}`);
-  console.log(`token1Address: ${_token1Address}`);
-  console.log(`token0Contract: ${await token0Contract.name()}`);
-  console.log(`token1Contract: ${await token1Contract.name()}`);
+  if (!token0Contract || !token1Contract) {
+    throw new Error("Failed to create token contract instances. Check contract addresses.");
+  }
 
   const token0: Token = {
     address: _token0Address,
@@ -64,14 +63,14 @@ async function getPairContract(
   return pairContract;
 }
 
-async function getReserves(_pairContract: Contract): Promise<[Big, Big]> {
+async function getReserves(_pairContract: Contract): Promise<[bigint, bigint]> {
   const reserves = await _pairContract.getReserves();
-  return [new Big(reserves.reserve0.toString()), new Big(reserves.reserve1.toString())];
+  return [reserves.reserve0, reserves.reserve1];
 }
 
 async function calculatePrice(_pairContract: Contract): Promise<string> {
   const [x, y] = await getReserves(_pairContract);
-  return Big(x).div(Big(y)).toString();
+  return (x / y).toString();
 }
 
 async function calculateDifference(_uPrice: string, _sPrice: string): Promise<string> {
