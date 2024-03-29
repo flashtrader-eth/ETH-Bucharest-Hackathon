@@ -45,6 +45,7 @@
     "@openzeppelin/contracts": "^5.0.2",
     "axios": "^1.6.8",
     "dotenv": "^16.4.5",
-    "ethers": "^6.11.1"
+    "ethers": "^6.11.1",
+    "isomorphic-ws": "^5.0.0"
   }
 }

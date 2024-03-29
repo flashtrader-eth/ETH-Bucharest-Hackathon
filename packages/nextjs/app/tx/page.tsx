@@ -3,10 +3,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import dotenv from "dotenv";
-// import { ethers } from "ethers";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
-import { ArchiveBoxXMarkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 dotenv.config();
 
@@ -125,17 +123,11 @@ const styles = `
   }
 `;
 
-interface CardWithExchangeAndAddress {
-  icon: React.ReactNode;
-  exchange: string;
-  address: string;
-}
-
-interface CardWithExchangeAndCoinAndValue {
-  icon: React.ReactNode;
-  exchange: string;
-  coin: string;
-  value: number;
+interface Transaction {
+  from: string;
+  to: string;
+  value: string;
+  timeStamp: string;
 }
 
 const Tx: NextPage = () => {
@@ -144,12 +136,12 @@ const Tx: NextPage = () => {
 
   const { address: connectedAddress } = useAccount();
   // State for first table
-  const [transactions1, setTransactions1] = useState([]);
+  const [transactions1, setTransactions1] = useState<Transaction[]>([]);
   const [loading1, setLoading1] = useState(true);
   const [currentPage1, setCurrentPage1] = useState(1);
 
   // State for second table
-  const [transactions2, setTransactions2] = useState([]);
+  const [transactions2, setTransactions2] = useState<Transaction[]>([]);
   const [loading2, setLoading2] = useState(true);
   const [currentPage2, setCurrentPage2] = useState(1);
 
@@ -186,7 +178,7 @@ const Tx: NextPage = () => {
       );
       const result = response.data.result;
       if (Array.isArray(result)) {
-        // setTransactions1(result);
+        setTransactions1(result as any);
       } else {
         console.error("Received data is not an array:", result);
         setTransactions1([]);
@@ -210,7 +202,7 @@ const Tx: NextPage = () => {
       );
       const result = response.data.result;
       if (Array.isArray(result)) {
-        // setTransactions2(result);
+        setTransactions2(result as any);
       } else {
         console.error("Received data is not an array:", result);
         setTransactions2([]);
@@ -245,46 +237,41 @@ const Tx: NextPage = () => {
 
   return (
     <div className="flex items-center flex-col flex-grow pt-10 justify-center">
-      {/* Your JSX code here */}
-      <style>{styles}</style>
-      <div className="px-5"></div>
-      <div className="flex-grow w-full mt-16 px-8 py-12">
-        <div className="cards">
-          {/* Cards with exchange and coin */}
-          <CardWithEA
-            icon={<ArchiveBoxXMarkIcon className="h-12 w-12 fill-secondary" />}
-            exchange="UniSwap"
-            address={"0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f"}
-          />
-          <CardWithEA
-            icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
-            exchange="SushiSwap"
-            address={"0x24D3dD4a62e29770cf98810b09F89D3A90279E7a"}
-          />
-          <CardWithECV
-            icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
-            exchange="UniSwap"
-            coin="Shiba"
-            value={100}
-          />
-          <CardWithECV
-            icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
-            exchange="SushiSwap"
-            coin="WETH"
-            value={100}
-          />
-          <CardWithECV
-            icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
-            exchange="UniSwap"
-            coin="Shiba"
-            value={100}
-          />
-          <CardWithECV
-            icon={<MagnifyingGlassIcon className="h-12 w-12 fill-secondary" />}
-            exchange="SushiSwap"
-            coin="WETH"
-            value={100}
-          />
+      <div className="flex justify-between">
+        <div className="column" style={{ marginBottom: 20 }}>
+          <div className="overflow-x-auto shadow-lg">
+            <p className="title">DEX Liquidity Pool</p>
+            {loading1 ? (
+              <p>Loading...</p>
+            ) : (
+              <table className="table table-zebra w-full" style={{ fontSize: "0.8rem" }}>
+                <thead>
+                  <tr>
+                    <th className="bg-primary">Name</th>
+                    <th className="bg-primary">Address</th>
+                    <th className="bg-primary">WETH</th>
+                    <th className="bg-primary">Shiba</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>UniSwap</td>
+                    <td>0x811beEd0119b4AfCE20D2583EB608C6F7AF1954f</td>
+                    <td>100</td>
+                    <td>100</td>
+                  </tr>
+                  <tr>
+                    <td>SushiSwap</td>
+                    <td>0x24D3dD4a62e29770cf98810b09F89D3A90279E7a</td>
+                    <td>100</td>
+                    <td>100</td>
+                  </tr>
+                </tbody>
+              </table>
+            )}
+          </div>
+
+          <div className="px-5"></div>
         </div>
       </div>
 
@@ -309,10 +296,10 @@ const Tx: NextPage = () => {
                   {currentPageTransactions1.length > 0 ? (
                     currentPageTransactions1.map((transaction, index) => (
                       <tr key={index}>
-                        {/* <td className="text-center">{transaction.from}</td>
+                        <td className="text-center">{transaction.from}</td>
                         <td className="text-center">{transaction.to}</td>
                         <td className="text-center">{transaction.value}</td>
-                        <td className="text-center">{transaction.timeStamp}</td> */}
+                        <td className="text-center">{transaction.timeStamp}</td>
                       </tr>
                     ))
                   ) : (
@@ -370,10 +357,10 @@ const Tx: NextPage = () => {
                   {currentPageTransactions2.length > 0 ? (
                     currentPageTransactions2.map((transaction, index) => (
                       <tr key={index}>
-                        {/* <td className="text-center">{transaction.from}</td>
+                        <td className="text-center">{transaction.from}</td>
                         <td className="text-center">{transaction.to}</td>
                         <td className="text-center">{transaction.value}</td>
-                        <td className="text-center">{transaction.timeStamp}</td> */}
+                        <td className="text-center">{transaction.timeStamp}</td>
                       </tr>
                     ))
                   ) : (
@@ -410,30 +397,6 @@ const Tx: NextPage = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-const CardWithEA: React.FC<CardWithExchangeAndAddress> = ({ icon, exchange, address }) => {
-  return (
-    <div className="card bg-base-100 px-5 py-8 text-center items-center max-w-xs rounded-xl">
-      {icon}
-      <p className="mt-4">
-        {exchange} :
-        <br />
-        <span className="break-all">{address}</span>
-      </p>
-    </div>
-  );
-};
-
-const CardWithECV: React.FC<CardWithExchangeAndCoinAndValue> = ({ icon, exchange, coin, value }) => {
-  return (
-    <div className="card bg-base-100 px-5 py-8 text-center items-center max-w-xs rounded-xl">
-      {icon}
-      <p className="mt-4">
-        {exchange} : {coin} : {value}
-      </p>
     </div>
   );
 };

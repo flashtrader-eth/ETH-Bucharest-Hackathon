@@ -1,7 +1,7 @@
 "use client";
 
 import type { NextPage } from "next";
-// import { formatEther } from "viem";
+import { formatEther } from "viem";
 import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
 
@@ -9,26 +9,26 @@ const Events: NextPage = () => {
   const { data: tradeExecuted, isLoading: isTradeExecutedLoading } = useScaffoldEventHistory({
     contractName: "FlashLoan",
     eventName: "TradeExecuted",
-    fromBlock: 5490887n,
+    fromBlock: 0n,
   });
 
-  //   const { data: loanedReturned, isLoading: isLoanedReturnedEventsLoading } = useScaffoldEventHistory({
-  //     contractName: "FlashLoan",
-  //     eventName: "LoanedReturned",
-  //     fromBlock: 5490887n,
-  //   });
+  const { data: loanedReturned, isLoading: isLoanedReturnedEventsLoading } = useScaffoldEventHistory({
+    contractName: "FlashLoan",
+    eventName: "LoanedReturned",
+    fromBlock: 0n,
+  });
 
-  //   const { data: swappedOnUniswap, isLoading: isSwappedOnUniswapEventsLoading } = useScaffoldEventHistory({
-  //     contractName: "FlashLoan",
-  //     eventName: "SwappedOnUniswap",
-  //     fromBlock: 5490887n,
-  //   });
+  const { data: swappedOnUniswap, isLoading: isSwappedOnUniswapEventsLoading } = useScaffoldEventHistory({
+    contractName: "FlashLoan",
+    eventName: "SwappedOnUniswap",
+    fromBlock: 0n,
+  });
 
-  //   const { data: swappedOnSushiswap, isLoading: isSwappedOnSushiswapEventsLoading } = useScaffoldEventHistory({
-  //     contractName: "FlashLoan",
-  //     eventName: "SwappedOnSushiswap",
-  //     fromBlock: 5490887n,
-  //   });
+  const { data: swappedOnSushiswap, isLoading: isSwappedOnSushiswapEventsLoading } = useScaffoldEventHistory({
+    contractName: "FlashLoan",
+    eventName: "SwappedOnSushiswap",
+    fromBlock: 5490887n,
+  });
 
   return (
     <>
@@ -60,13 +60,14 @@ const Events: NextPage = () => {
                     </tr>
                   ) : (
                     tradeExecuted?.map((event, index) => {
+                      console.log(event.args, "@@@args");
                       return (
                         <tr key={index}>
                           <td className="text-center">
                             <Address address={event.args.sender} />
                           </td>
                           <td>{event.args.token}</td>
-                          {/* <td>{parseFloat(formatEther(event.args.amount)).toFixed(4)}</td> */}
+                          <td>{parseFloat(formatEther(event.args.amount as bigint)).toFixed(4)} WETH</td>
                         </tr>
                       );
                     })
@@ -77,40 +78,40 @@ const Events: NextPage = () => {
           </div>
         )}
 
-        {/* {isTokenToEthEventsLoading ? (
+        {isLoanedReturnedEventsLoading ? (
           <div className="flex justify-center items-center mt-10">
             <span className="loading loading-spinner loading-lg"></span>
           </div>
         ) : (
           <div className="mt-8">
             <div className="text-center mb-4">
-              <span className="block text-2xl font-bold">Balloons To ETH Events</span>
+              <span className="block text-2xl font-bold">Loaned Returned Events</span>
             </div>
             <div className="overflow-x-auto shadow-lg">
               <table className="table table-zebra w-full">
                 <thead>
                   <tr>
-                    <th className="bg-primary">Address</th>
-                    <th className="bg-primary">Amount of Balloons In</th>
-                    <th className="bg-primary">Amount of ETH Out</th>
+                    <th className="bg-primary">Sender</th>
+                    <th className="bg-primary">Token</th>
+                    <th className="bg-primary">Returned Amount</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {!tokenToEthEvents || tokenToEthEvents.length === 0 ? (
+                  {!loanedReturned || loanedReturned.length === 0 ? (
                     <tr>
                       <td colSpan={3} className="text-center">
                         No events found
                       </td>
                     </tr>
                   ) : (
-                    tokenToEthEvents?.map((event, index) => {
+                    loanedReturned?.map((event, index) => {
                       return (
                         <tr key={index}>
                           <td className="text-center">
-                            <Address address={event.args.swapper} />
+                            <Address address={event.args.sender} />
                           </td>
-                          <td>{parseFloat(formatEther(event.args.tokensInput)).toFixed(4)}</td>
-                          <td>{parseFloat(formatEther(event.args.ethOutput)).toFixed(4)}</td>
+                          <td>{event.args.token}</td>
+                          <td>{parseFloat(formatEther(event.args.amount as bigint)).toFixed(4)} WETH</td>
                         </tr>
                       );
                     })
@@ -121,42 +122,44 @@ const Events: NextPage = () => {
           </div>
         )}
 
-        {isLiquidityApprovedEventsLoading ? (
+        {isSwappedOnUniswapEventsLoading ? (
           <div className="flex justify-center items-center mt-10">
             <span className="loading loading-spinner loading-lg" />
           </div>
         ) : (
           <div className="mt-8">
             <div className="text-center mb-4">
-              <span className="block text-2xl font-bold">Liquidity Approved Events</span>
+              <span className="block text-2xl font-bold">Swapped On Uniswap Events</span>
             </div>
             <div className="overflow-x-auto shadow-lg">
               <table className="table table-zebra w-full">
                 <thead>
                   <tr>
-                    <th className="bg-primary">Owner</th>
-                    <th className="bg-primary">Spender</th>
-                    <th className="bg-primary">Liquidity Approved</th>
+                    <th className="bg-primary">Token In</th>
+                    <th className="bg-primary">Token Out</th>
+                    <th className="bg-primary">Amount In</th>
+                    <th className="bg-primary">Amount Out</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {!liquidityApprovedEvents || liquidityApprovedEvents.length === 0 ? (
+                  {!swappedOnUniswap || swappedOnUniswap.length === 0 ? (
                     <tr>
                       <td colSpan={4} className="text-center">
                         No events found
                       </td>
                     </tr>
                   ) : (
-                    liquidityApprovedEvents?.map((event, index) => {
+                    swappedOnUniswap?.map((event, index) => {
                       return (
                         <tr key={index}>
                           <td className="text-center">
-                            <Address address={event.args.owner} />
+                            <Address address={event.args.path0} />
                           </td>
                           <td className="text-center">
-                            <Address address={event.args.spender} />
+                            <Address address={event.args.path1} />
                           </td>
-                          <td>{parseFloat(formatEther(event.args.value)).toFixed(4)}</td>
+                          <td>{parseFloat(formatEther(event.args.amountIn as bigint)).toFixed(4)} WETH</td>
+                          <td>{parseFloat(formatEther(event.args.amountOut as bigint)).toFixed(4)} SHIB</td>
                         </tr>
                       );
                     })
@@ -167,42 +170,44 @@ const Events: NextPage = () => {
           </div>
         )}
 
-        {isLiquidityProvidedEventsLoading ? (
+        {isSwappedOnSushiswapEventsLoading ? (
           <div className="flex justify-center items-center mt-10">
             <span className="loading loading-spinner loading-lg"></span>
           </div>
         ) : (
           <div className="mt-8">
             <div className="text-center mb-4">
-              <span className="block text-2xl font-bold">Liquidity Provided Events</span>
+              <span className="block text-2xl font-bold">Swapped On Sushiswap Events</span>
             </div>
             <div className="overflow-x-auto shadow-lg">
               <table className="table table-zebra w-full">
                 <thead>
                   <tr>
-                    <th className="bg-primary">Address</th>
-                    <th className="bg-primary">Amount of ETH In</th>
-                    <th className="bg-primary">Amount of Balloons In</th>
-                    <th className="bg-primary">Liquidity Minted</th>
+                    <th className="bg-primary">Token In</th>
+                    <th className="bg-primary">Token Out</th>
+                    <th className="bg-primary">Amount In</th>
+                    <th className="bg-primary">Amount Out</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {!liquidityProvidedEvents || liquidityProvidedEvents.length === 0 ? (
+                  {!swappedOnSushiswap || swappedOnSushiswap.length === 0 ? (
                     <tr>
                       <td colSpan={4} className="text-center">
                         No events found
                       </td>
                     </tr>
                   ) : (
-                    liquidityProvidedEvents?.map((event, index) => {
+                    swappedOnSushiswap?.map((event, index) => {
                       return (
                         <tr key={index}>
                           <td className="text-center">
-                            <Address address={event.args.liquidityProvider} />
+                            <Address address={event.args.path0} />
                           </td>
-                          <td>{parseFloat(formatEther(event.args.ethInput)).toFixed(4)}</td>
-                          <td>{parseFloat(formatEther(event.args.tokensInput)).toFixed(4)}</td>
-                          <td>{parseFloat(formatEther(event.args.liquidityMinted)).toFixed(4)}</td>
+                          <td className="text-center">
+                            <Address address={event.args.path1} />
+                          </td>
+                          <td>{parseFloat(formatEther(event.args.amountIn as bigint)).toFixed(4)} SHIB</td>
+                          <td>{parseFloat(formatEther(event.args.amountOut as bigint)).toFixed(4)} WETH</td>
                         </tr>
                       );
                     })
@@ -212,52 +217,6 @@ const Events: NextPage = () => {
             </div>
           </div>
         )}
-
-        {isLiquidityRemovedEventsLoading ? (
-          <div className="flex justify-center items-center mt-10">
-            <span className="loading loading-spinner loading-lg"></span>
-          </div>
-        ) : (
-          <div className="mt-8 mb-8">
-            <div className="text-center mb-4">
-              <span className="block text-2xl font-bold">Liquidity Removed Events</span>
-            </div>
-            <div className="overflow-x-auto shadow-lg mb-5">
-              <table className="table table-zebra w-full">
-                <thead>
-                  <tr>
-                    <th className="bg-primary">Address</th>
-                    <th className="bg-primary">Amount of ETH Out</th>
-                    <th className="bg-primary">Amount of Balloons Out</th>
-                    <th className="bg-primary">Liquidity Withdrawn</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {!liquidityRemovedEvents || liquidityRemovedEvents.length === 0 ? (
-                    <tr>
-                      <td colSpan={4} className="text-center">
-                        No events found
-                      </td>
-                    </tr>
-                  ) : (
-                    liquidityRemovedEvents?.map((event, index) => {
-                      return (
-                        <tr key={index}>
-                          <td className="text-center">
-                            <Address address={event.args.liquidityRemover} />
-                          </td>
-                          <td>{parseFloat(formatEther(event.args.ethOutput)).toFixed(4)}</td>
-                          <td>{parseFloat(formatEther(event.args.tokensOutput)).toFixed(4)}</td>
-                          <td>{parseFloat(formatEther(event.args.liquidityWithdrawn)).toFixed(4)}</td>
-                        </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              </table>
-            </div> */}
-        {/* </div> */}
-        {/* )} */}
       </div>
     </>
   );

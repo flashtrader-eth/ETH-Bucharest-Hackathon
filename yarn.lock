@@ -8981,6 +8981,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"isomorphic-ws@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "isomorphic-ws@npm:5.0.0"
+  peerDependencies:
+    ws: "*"
+  checksum: 10/e20eb2aee09ba96247465fda40c6d22c1153394c0144fa34fe6609f341af4c8c564f60ea3ba762335a7a9c306809349f9b863c8beedf2beea09b299834ad5398
+  languageName: node
+  linkType: hard
+
 "isows@npm:1.0.3":
   version: 1.0.3
   resolution: "isows@npm:1.0.3"
@@ -11938,6 +11947,7 @@ __metadata:
     dotenv: "npm:^16.4.5"
     ethers: "npm:^6.11.1"
     husky: "npm:^8.0.1"
+    isomorphic-ws: "npm:^5.0.0"
     lint-staged: "npm:^13.0.3"
   languageName: unknown
   linkType: soft
