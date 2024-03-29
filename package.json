@@ -10,6 +10,7 @@
   },
   "scripts": {
     "account": "yarn workspace @se-2/hardhat account",
+    "bot": "yarn workspace @se-2/hardhat bot",
     "chain": "yarn workspace @se-2/hardhat chain",
     "fork": "yarn workspace @se-2/hardhat fork",
     "deploy": "yarn workspace @se-2/hardhat deploy",
@@ -34,7 +35,7 @@
     "vercel": "yarn workspace @se-2/nextjs vercel",
     "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo"
   },
-  "packageManager": "yarn@3.2.3",
+  "packageManager": "yarn@4.1.1",
   "devDependencies": {
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3"
