@@ -10,6 +10,7 @@
   },
   "scripts": {
     "account": "yarn workspace @se-2/hardhat account",
+    "bot": "yarn workspace @se-2/hardhat bot",
     "chain": "yarn workspace @se-2/hardhat chain",
     "fork": "yarn workspace @se-2/hardhat fork",
     "deploy": "yarn workspace @se-2/hardhat deploy",
@@ -22,6 +23,7 @@
     "hardhat:lint-staged": "yarn workspace @se-2/hardhat lint-staged",
     "hardhat:format": "yarn workspace @se-2/hardhat format",
     "hardhat:test": "yarn workspace @se-2/hardhat test",
+    "manipulate": "yarn workspace @se-2/hardhat manipulate",
     "test": "yarn hardhat:test",
     "format": "yarn next:format && yarn hardhat:format",
     "start": "yarn workspace @se-2/nextjs dev",
@@ -34,9 +36,16 @@
     "vercel": "yarn workspace @se-2/nextjs vercel",
     "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo"
   },
-  "packageManager": "yarn@3.2.3",
+  "packageManager": "yarn@4.1.1",
   "devDependencies": {
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2",
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.11.1",
+    "isomorphic-ws": "^5.0.0"
   }
 }

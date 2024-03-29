@@ -4,6 +4,246 @@
  */
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
-const deployedContracts = {} as const;
+const deployedContracts = {
+  31337: {
+    FlashLoan: {
+      address: "0x4Dd5336F3C0D70893A7a86c6aEBe9B953E87c891",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_sRouter",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_uRouter",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "token",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "LoanedReturned",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountIn",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountOut",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "path0",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "path1",
+              type: "address",
+            },
+          ],
+          name: "SwappedOnSushiswap",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountIn",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountOut",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "path0",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "path1",
+              type: "address",
+            },
+          ],
+          name: "SwappedOnUniswap",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "token",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "TradeExecuted",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bool",
+              name: "_startOnUniswap",
+              type: "bool",
+            },
+            {
+              internalType: "address",
+              name: "_token0",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_token1",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "_flashAmount",
+              type: "uint256",
+            },
+          ],
+          name: "executeTrade",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IERC20[]",
+              name: "tokens",
+              type: "address[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "amounts",
+              type: "uint256[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "feeAmounts",
+              type: "uint256[]",
+            },
+            {
+              internalType: "bytes",
+              name: "userData",
+              type: "bytes",
+            },
+          ],
+          name: "receiveFlashLoan",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "sRouter",
+          outputs: [
+            {
+              internalType: "contract IUniswapV2Router02",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "uRouter",
+          outputs: [
+            {
+              internalType: "contract IUniswapV2Router02",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        receiveFlashLoan: "@balancer-labs/v2-interfaces/contracts/vault/IFlashLoanRecipient.sol",
+      },
+    },
+  },
+} as const;
 
 export default deployedContracts satisfies GenericContractsDeclaration;
