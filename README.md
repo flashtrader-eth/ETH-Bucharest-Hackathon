@@ -1,3 +1,9 @@
+# Project made by
+<a href="https://github.com/alien1403/ETH-Bucharest-Hackathon/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=alien1403/ETH-Bucharest-Hackathon" anon={1}/>
+</a>
+
+
 # 🏗 Scaffold-ETH 2
 
 <h4 align="center">
